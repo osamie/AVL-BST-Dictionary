@@ -96,5 +96,18 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 			return 0;
 		}
 	}
+	
+	public void rotateLeft(AVLNode n)
+	{
+		//AVLNode q =root;
+		//AVLNode p = q.right;
+		//AVLNode c = q.left;
+		//AVLNode a = p.left;
+		//AVLNode b = p.right;
+		//q = new AVLNode(q.key,c,a,q.getBalance());
+		//p = new AVLNode(p.data,q,b);
+	//return p;
+	}
+	
 
 }

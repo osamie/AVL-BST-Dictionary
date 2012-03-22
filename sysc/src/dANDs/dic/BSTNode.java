@@ -1,6 +1,6 @@
 package dANDs.dic;
 // The "BSTNode" class.
-public class BSTNode<E, K extends Sortable> {
+public class BSTNode<E, K extends Sortable> { 
 	protected K key;
 
 	protected E element;
