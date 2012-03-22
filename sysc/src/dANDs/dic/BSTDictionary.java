@@ -77,11 +77,49 @@ public class BSTDictionary<E, K extends SortableString> implements Dictionary<E,
 		
 	}
 	
-	public BSTNode<E,K> deleteItem(BSTNode<E,K> node ,K key){
-		return new BSTNode<E,K>(null,null,null,null);
+	
+	/**
+	 * deleteItem
+	 * 
+	 * @param node
+	 * @param key
+	 * @return
+	 */
+	public BSTNode<E,K> deleteItem(BSTNode<E,K> rtnode ,K key)
+	{
+		if(rtnode == null){
+			throw new RuntimeException("item not found");
+			
+		}
+		
+		else if(rtnode.getKey().compareTo(key) == 0){
+			return deleteNode(rtnode,key);
+			
+		}
+		
+		else if(key.compareTo(rtnode.getKey()) < 0) //rtnode.key > key
+		{
+			rtnode.setLeft(deleteItem(rtnode.getLeft(),key) );
+			return rtnode;
+			
+		}
+		
+		else{
+			rtnode.setRight(deleteItem(rtnode.getRight(),key) );
+			return rtnode;
+		}
+		
 	}
 	
+	/**
+	 * deleteNode
+	 * 
+	 * @param node
+	 * @param key
+	 * @return
+	 */
 	public BSTNode<E,K> deleteNode(BSTNode<E,K> node ,K key){
+		
 		return new BSTNode<E,K>(null,null,null,null);
 	}
 	
