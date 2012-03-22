@@ -1,7 +1,7 @@
 package dANDs.dic;
 
 //public class BSTDictionary<String, SortableString> {
-public class BSTDictionary<T1, T2> implements Dictionary {
+public class BSTDictionary<E, K extends Sortable> implements Dictionary {
 
 	public void delete(SortableString sortableString) {
 		// TODO Auto-generated method stub
