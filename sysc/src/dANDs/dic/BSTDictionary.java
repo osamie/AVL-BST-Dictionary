@@ -92,8 +92,9 @@ public class BSTDictionary<E, K extends SortableString> implements Dictionary<E,
 			
 		}
 		
-		else if(rtnode.getKey().compareTo(key) == 0){
-			return deleteNode(rtnode,key);
+		else if(rtnode.getKey().compareTo(key) == 0) //if the keys are the same
+		{
+			return deleteNode(rtnode);
 			
 		}
 		
@@ -118,7 +119,29 @@ public class BSTDictionary<E, K extends SortableString> implements Dictionary<E,
 	 * @param key
 	 * @return
 	 */
-	public BSTNode<E,K> deleteNode(BSTNode<E,K> node ,K key){
+	public BSTNode<E,K> deleteNode(BSTNode<E,K> node){
+		
+		//if the node is a leaf
+		if((node.getLeft() == null) && (node.getRight() == null))
+		{
+			return null;
+			
+		}
+		
+		//if node has no left child
+		else if (node.getLeft() == null){
+			return node.getRight();
+		}
+		
+		//if node has no right child
+		else if (node.getRight() == null){
+			return node.getLeft();
+		}
+		
+		//if there are 2 children
+		else{
+			
+		}
 		
 		return new BSTNode<E,K>(null,null,null,null);
 	}
