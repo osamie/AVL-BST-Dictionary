@@ -5,7 +5,7 @@ public class BSTNode<E, K extends Sortable> {
 
 	protected E element;
 
-	protected BSTNode<E, K> left, right;
+	protected BSTNode<E, K> left = null, right = null ;
 
 	public BSTNode(K key, E element, BSTNode<E, K> left, BSTNode<E, K> right) {
 		this.key = key;

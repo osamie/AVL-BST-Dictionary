@@ -3,13 +3,13 @@ package dANDs.dic;
 //public class BSTDictionary<String, SortableString> {
 public class BSTDictionary<E, K extends SortableString> implements Dictionary<E,K> {
  
-	BSTNode<E,K> root;
+	BSTNode<E,K> root = null;
 	
 
 	public int depth() {
 		
 		// TODO Auto-generated method stub
-		return 0;
+		return depth(root);
 	}
 	
 	//this function will return the depth/levels of nodes in the tree
@@ -25,19 +25,103 @@ public class BSTDictionary<E, K extends SortableString> implements Dictionary<E,
 	
 	
 	public void printTree() {
+		System.out.print(root.getElement() + " and depth is:" + depth() + "\n");
+		
+		//in-order traversal of BST
+		BSTNode<E,K> currentNode;
+		visitNode(root);
+		//if (visitNode(root) == null)
+			//System.out.print(" Empty node ");
+		
+		
+		
+		
+		
+		
 		// TODO Auto-generated method stub
 		
 	}
 	
+	protected void visitNode(BSTNode<E,K> node){
+		//findLeftmost(root)
+		//System.out.println("starting to print");
+		
+		if(node == null) 
+			System.out.println("Empty node HERE!");
+		
+		else if((node.getLeft() == null) && (node.getRight() == null))
+		{
+			System.out.println(node.getElement() );
+		}
+		
+		else{
+			if(node.getLeft() == null) //if the node has only a left subtree
+			{
+				System.out.println(node.getElement());
+				//System.out.println(" " + node.getElement().toString());
+				//System.out.println("   \\");
+				visitNode(node.getRight());
+			}
+			
+			else if (node.getRight() == null) //if the node has only a left subtree
+			{
+				System.out.println(node.getElement());
+				//System.out.println("/");
+				visitNode(node.getLeft());
+			}
+			
+			else //if the node has both right and left children 
+			{
+				visitNode(node.getLeft()); //now visit the left subtree
+				visitNode(node.getRight()); //then visit the right subtree
+				
+				//System.out.println("error here, left element: " + node.getLeft().getElement());
+			}
+		}
+		
+		//return node.getElement()
+	}
+	
 	@Override
-	public E search(K key) {
-		// TODO Auto-generated method stub
-		return null;
+	public E search(K key) 
+	{
+		return searchElement(root, key); //start searching for the element from the root node of the tree. 
+		
+	}
+	
+	public E searchElement(BSTNode<E,K> node, K searchKey ){
+		//E treeElement; 
+		if(node == null) return null;
+		
+		else{
+			if (searchKey.compareTo(node.getKey()) == 0) //if the keys are equal
+			{
+				return node.getElement(); //return the Element in that node
+			}
+			
+			else if(searchKey.compareTo(node.getKey()) < 0) //if the search key is less than the node's key 
+			{
+				return searchElement(node.getLeft(),searchKey);//search the left subtree
+			}
+			else{
+				return searchElement(node.getRight(),searchKey);//search the left subtree
+			}
+		}
+			
 	}
 
 	@Override
-	public void insert(K key, E element) {
-		root = insertItem(root,element,key);
+	public void insert(K key, E element) 
+	{
+		/**if(root == null)
+		{
+			root = new BSTNode<E,K>(key, element,null,null);
+			System.out.println(" just initialized root here: " + element);
+			//System.out.println(" node here is : " + root.getElement());
+			//return node;
+			
+		}**/
+		 root = insertItem(root,element,key);
 		// TODO Auto-generated method stub
 		
 	}
@@ -45,25 +129,31 @@ public class BSTDictionary<E, K extends SortableString> implements Dictionary<E,
 		
 	public BSTNode<E,K> insertItem(BSTNode<E,K> node,E element, K key){
 	
-		BSTNode<E,K> newSubtree;
+		//BSTNode<E,K> newSubtree;
 		
-		if(node == null){
+		if(node == null)
+		{
 			node = new BSTNode<E,K>(key, element,null,null);
+			System.out.println(" Inserted an element: " + element);
+			//System.out.println(" node here is : " + root.getElement());
 			return node;
+			
 		}
 	    
 		//E nodeElement = node.getElement();
 		//BSTNode<E,K> newNode = new BSTNode<E,K>(key,element,null,null);
 		
-		if(key.compareTo(node.getKey()) < 0 ){
-			newSubtree = insertItem(node.getLeft(),element,key);
-			node.setLeft(newSubtree);
+		else if(key.compareTo(node.getKey()) < 0 ){
+			//newSubtree = insertItem(node.getLeft(),element,key);
+			node.setLeft(insertItem(node.getLeft(),element,key));
+			System.out.println(" Inserted an element Left: " + element);
 			return node;
 		}
 		
 		else { // search the right subtree
-		      newSubtree = insertItem(node.getRight(),element,key);
-		      node.setRight(newSubtree);
+		      //newSubtree = insertItem(node.getRight(),element,key);
+		      node.setRight(insertItem(node.getRight(),element,key));
+		      System.out.println(" Inserted an element Right: " + element);
 		      return node;
 		}  // end if
 		
@@ -88,27 +178,31 @@ public class BSTDictionary<E, K extends SortableString> implements Dictionary<E,
 	public BSTNode<E,K> deleteItem(BSTNode<E,K> rtnode ,K key)
 	{
 		if(rtnode == null){
-			throw new RuntimeException("item not found");
-			
+			//throw new RuntimeException("item not found in: " + rtnode.getElement().toString());
+			System.out.println("trying to delete a null node here!");
+			return null;
 		}
-		
-		else if(rtnode.getKey().compareTo(key) == 0) //if the keys are the same
-		{
-			return deleteNode(rtnode);
-			
-		}
-		
-		else if(key.compareTo(rtnode.getKey()) < 0) //rtnode.key > key
-		{
-			rtnode.setLeft(deleteItem(rtnode.getLeft(),key) );
-			return rtnode;
-			
-		}
-		
 		else{
-			rtnode.setRight(deleteItem(rtnode.getRight(),key) );
-			return rtnode;
+			if(rtnode.getKey().compareTo(key) == 0) //if the keys are the same
+			{
+				return deleteNode(rtnode);
+				
+			}
+			
+			else if(key.compareTo(rtnode.getKey()) < 0) //rtnode.key > key
+			{
+				rtnode.setLeft(deleteItem(rtnode.getLeft(),key) );
+				return rtnode;
+				
+			}
+			
+			else{
+				rtnode.setRight(deleteItem(rtnode.getRight(),key) );
+				return rtnode;
+			}
+		
 		}
+		//return rtnode;
 		
 	}
 	
@@ -140,11 +234,13 @@ public class BSTDictionary<E, K extends SortableString> implements Dictionary<E,
 		
 		//if the tree has 2 children
 		else{
-			node = findLeftmost(node.getRight());
+			node.setElement(findLeftmost(node.getRight()));
+			node.setRight(deleteLeftmost(node.getRight()));
+			return node;
 			
 		}
 		
-		return new BSTNode<E,K>(null,null,null,null);
+		//return new BSTNode<E,K>(null,null,null,null);
 	}
 	
 	public BSTNode<E,K> deleteLeftmost(BSTNode<E,K> node){
@@ -157,9 +253,9 @@ public class BSTDictionary<E, K extends SortableString> implements Dictionary<E,
 		}	
 	}
 	
-	public BSTNode<E,K> findLeftmost(BSTNode<E,K> node){
+	public E findLeftmost(BSTNode<E,K> node){
 		if(node.getLeft() == null){
-			return node;
+			return node.getElement();
 		}
 		else{
 			return findLeftmost(node.getLeft());

@@ -25,23 +25,33 @@ public class DictionaryTest {
 		BSTDictionary<String, SortableString> dict1 = new BSTDictionary<String, SortableString>();
 		AVLDictionary<String, SortableString> dict2 = new AVLDictionary<String, SortableString>();
 
+		System.out.println("STARTING TO insert: ");
+		
 		// Insert lots of entries
 		fill();
-		for (int i = 0; i < 26 * 26; i++) {
+		for (int i = 0; i < 6 * 6; i++) {
 			int e;
 			do {
-				e = (int) (Math.random() * (26 * 26));
+				e = (int) (Math.random() * (6 * 6));
 			} while (entries[e] == null);
-
+			
+			System.out.println("attempting to insert: " + entries[e]);
 			dict1.insert(new SortableString(entries[e]), entries[e]);
-			dict2.insert(new SortableString(entries[e]), entries[e]);
+			
+			//dict2.insert(new SortableString(entries[e]), entries[e]);
 			entries[e] = null;
 		}
-
+		//String[]k = {"a","b","f","g"};
+		//String[]e1 = {"h","b","d","y"};
+		//dict1.insert(new SortableString(k),e1[1]);
+		//dict1.insert(new SortableString("bla2"), "child");
+		//dict1.insert(new SortableString("bla3"), "child3");
 		// print the two dictionaries
 		dict1.printTree();
-		dict2.printTree();
+		//dict2.printTree();
+		
 		// print the depth
+		
 		System.out.println("The initial BST tree has a maximum depth of "
 				+ dict1.depth());
 		System.out.println("The initial AVL tree has a maximum depth of "

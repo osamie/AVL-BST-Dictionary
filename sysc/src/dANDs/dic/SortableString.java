@@ -2,7 +2,7 @@ package dANDs.dic;
 
 public class SortableString implements Sortable {
 
-	String str;
+	private String str;
 	public SortableString(String string) {
 		str = string;
 	}
@@ -23,11 +23,17 @@ public class SortableString implements Sortable {
 		
 		if(other instanceof SortableString ) {
 			SortableString otherString = (SortableString)other;
-			return str.compareTo(otherString.str);
+			return str.toString().compareTo(otherString.toString());
 		}
 		
 		
 		throw new RuntimeException("wrong type compare");
+	}
+	
+	//not really needed but..
+	public String toString(){
+		return str;//.toString();
+		
 	}
 
 }
