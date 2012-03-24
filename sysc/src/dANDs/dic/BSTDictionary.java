@@ -138,8 +138,9 @@ public class BSTDictionary<E, K extends SortableString> implements Dictionary<E,
 			return node.getLeft();
 		}
 		
-		//if there are 2 children
+		//if the tree has 2 children
 		else{
+			node = findLeftmost(node.getRight());
 			
 		}
 		
