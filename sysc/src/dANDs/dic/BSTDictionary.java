@@ -25,22 +25,29 @@ public class BSTDictionary<E, K extends SortableString> implements Dictionary<E,
 	
 	
 	public void printTree() {
-		System.out.print(root.getElement() + " and depth is:" + depth() + "\n");
+		//System.out.print(root.getElement() + " and depth is:" + depth() + "\n");
 		
 		//in-order traversal of BST
-		BSTNode<E,K> currentNode;
-		visitNode(root);
-		//if (visitNode(root) == null)
-			//System.out.print(" Empty node ");
+		//BSTNode<E,K> currentNode;
+		//visitNode(root);
+		
+		printTree(root); 
+		System.out.println(); 
 		
 		
-		
-		
-		
-		
-		// TODO Auto-generated method stub
 		
 	}
+	
+
+	private void printTree(BSTNode node) { 
+		 if (node == null) return;
+
+		 // left, node itself, right 
+		 printTree(node.left); 
+		 System.out.print(node.getElement() + "  "); 
+		 printTree(node.right); 
+		} 
+	
 	
 	protected void visitNode(BSTNode<E,K> node){
 		//findLeftmost(root)
@@ -49,9 +56,10 @@ public class BSTDictionary<E, K extends SortableString> implements Dictionary<E,
 		if(node == null) 
 			System.out.println("Empty node HERE!");
 		
+		//if the visited node is a leaf (i.e has no right/left children)
 		else if((node.getLeft() == null) && (node.getRight() == null))
 		{
-			System.out.println(node.getElement() );
+			System.out.println(node.getElement() ); //then simply print the element
 		}
 		
 		else{
@@ -67,7 +75,7 @@ public class BSTDictionary<E, K extends SortableString> implements Dictionary<E,
 			{
 				System.out.println(node.getElement());
 				//System.out.println("/");
-				visitNode(node.getLeft());
+				visitNode(node.getLeft()); //now visit the left sub tree
 			}
 			
 			else //if the node has both right and left children 
@@ -162,8 +170,8 @@ public class BSTDictionary<E, K extends SortableString> implements Dictionary<E,
 	
 	@Override
 	public void delete(K key) {
-		root = deleteItem(root,key);
-		// TODO Auto-generated method stub
+		root = deleteItem(root,key); //making a reference to the subtree that will be altered
+		
 		
 	}
 	

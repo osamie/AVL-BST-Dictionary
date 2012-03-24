@@ -8,16 +8,18 @@ package dANDs.dic;
 // randomly chosen entries in both dictionaries. Obviously,
 // the search result should be the same for both dictionaries.
 public class DictionaryTest {
-	protected static String[] entries = new String[26 * 26];
+	protected static String[] entries = new String[6 * 6];
+	
+	private static int array_size = 6;
 
 	protected static void fill() {
 		// Insert 26 * 26 entries
-		for (int i = 0; i < 26; i++)
-			for (int j = 0; j < 26; j++) {
+		for (int i = 0; i < array_size; i++)
+			for (int j = 0; j < array_size; j++) {
 				StringBuffer s = new StringBuffer();
 				s.append((char) ((int) 'A' + i));
 				s.append((char) ((int) 'A' + j));
-				entries[i * 26 + j] = s.toString();
+				entries[i * array_size + j] = s.toString();
 			}
 	} // fill method
 
@@ -29,18 +31,25 @@ public class DictionaryTest {
 		
 		// Insert lots of entries
 		fill();
-		for (int i = 0; i < 6 * 6; i++) {
+		System.out.print("{");
+		for (int i = 0; i < array_size * array_size; i++) {
 			int e;
 			do {
-				e = (int) (Math.random() * (6 * 6));
+				e = (int) (Math.random() * (array_size * array_size));
 			} while (entries[e] == null);
 			
+			/**System.out.print("\"");
+			System.out.print(entries[e]);
+			System.out.print("\"");
+			System.out.print(",");**/
 			System.out.println("attempting to insert: " + entries[e]);
 			dict1.insert(new SortableString(entries[e]), entries[e]);
 			
 			//dict2.insert(new SortableString(entries[e]), entries[e]);
 			entries[e] = null;
 		}
+		System.out.print("};"); 
+		//entries = {"AY","AC","AH","AQ","AZ","BA","AG","AR","AA","AM","AV","AJ","BI","AL","AP","BC","BD","AT","AK","AF","AE","AB","AU","BJ","BF","AX","BE","BG","AO","BB","AN","AW","AD","AI","BH","AS"};
 		//String[]k = {"a","b","f","g"};
 		//String[]e1 = {"h","b","d","y"};
 		//dict1.insert(new SortableString(k),e1[1]);
@@ -54,34 +63,32 @@ public class DictionaryTest {
 		
 		System.out.println("The initial BST tree has a maximum depth of "
 				+ dict1.depth());
-		System.out.println("The initial AVL tree has a maximum depth of "
-				+ dict2.depth());
+		//System.out.println("The initial AVL tree has a maximum depth of "
+	//			+ dict2.depth());
 
 		// Delete half the entries
 		fill();
-		for (int i = 0; i < 13 * 26; i++) {
+		for (int i = 0; i < (array_size/2) * array_size; i++) {
 			int e;
 			do {
-				e = (int) (Math.random() * (26 * 26));
+				e = (int) (Math.random() * (array_size * array_size));
 			} while (entries[e] == null);
 
 			dict1.delete(new SortableString(entries[e]));
-			dict2.delete(new SortableString(entries[e]));
+			//dict2.delete(new SortableString(entries[e]));
 		}
 
-		System.out
-				.println("After deletes, the BST tree has a maximum depth of "
+		System.out.println("After deletes, the BST tree has a maximum depth of "
 						+ dict1.depth());
-		System.out
-				.println("After deletes, the AVL tree has a maximum depth of "
+		System.out.println("After deletes, the AVL tree has a maximum depth of "
 						+ dict2.depth());
 
 		// Add a quarter the entries
 		fill();
-		for (int i = 0; i < 6 * 26; i++) {
+		for (int i = 0; i < (array_size/4) * array_size; i++) {
 			int e;
 			do {
-				e = (int) (Math.random() * (26 * 26));
+				e = (int) (Math.random() * (array_size * array_size));
 			} while (entries[e] == null);
 
 			dict1.insert(new SortableString(entries[e]), entries[e]);
@@ -97,10 +104,10 @@ public class DictionaryTest {
 
 		// Search for a few random entries
 		fill();
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < array_size/4; i++) {
 			int e;
 			do {
-				e = (int) (Math.random() * (26 * 26));
+				e = (int) (Math.random() * (array_size * array_size));
 			} while (entries[e] == null);
 
 			System.out.print("Searching for " + entries[e] + ": ");
