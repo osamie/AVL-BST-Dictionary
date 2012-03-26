@@ -8,9 +8,10 @@ package dANDs.dic;
 // randomly chosen entries in both dictionaries. Obviously,
 // the search result should be the same for both dictionaries.
 public class DictionaryTest {
-	protected static String[] entries = new String[6 * 6];
+	private static int array_size = 13;
+	protected static String[] entries = new String[array_size * array_size];
 	
-	private static int array_size = 6;
+	
 
 	protected static void fill() {
 		// Insert 26 * 26 entries
@@ -27,37 +28,25 @@ public class DictionaryTest {
 		BSTDictionary<String, SortableString> dict1 = new BSTDictionary<String, SortableString>();
 		AVLDictionary<String, SortableString> dict2 = new AVLDictionary<String, SortableString>();
 
-		System.out.println("STARTING TO insert: ");
-		
-		// Insert lots of entries
+		// Insert lots of entries	
 		fill();
-		System.out.print("{");
+		//System.out.print("{");
 		for (int i = 0; i < array_size * array_size; i++) {
 			int e;
 			do {
 				e = (int) (Math.random() * (array_size * array_size));
 			} while (entries[e] == null);
 			
-			/**System.out.print("\"");
-			System.out.print(entries[e]);
-			System.out.print("\"");
-			System.out.print(",");**/
-			System.out.println("attempting to insert: " + entries[e]);
+			
+			
 			dict1.insert(new SortableString(entries[e]), entries[e]);
 			
 			//dict2.insert(new SortableString(entries[e]), entries[e]);
 			entries[e] = null;
 		}
-		System.out.print("};"); 
-		//entries = {"AY","AC","AH","AQ","AZ","BA","AG","AR","AA","AM","AV","AJ","BI","AL","AP","BC","BD","AT","AK","AF","AE","AB","AU","BJ","BF","AX","BE","BG","AO","BB","AN","AW","AD","AI","BH","AS"};
-		//String[]k = {"a","b","f","g"};
-		//String[]e1 = {"h","b","d","y"};
-		//dict1.insert(new SortableString(k),e1[1]);
-		//dict1.insert(new SortableString("bla2"), "child");
-		//dict1.insert(new SortableString("bla3"), "child3");
-		// print the two dictionaries
+		
+		System.out.println("\nIn-order traversal of BST nodes after insertion: ");
 		dict1.printTree();
-		//dict2.printTree();
 		
 		// print the depth
 		
@@ -66,6 +55,9 @@ public class DictionaryTest {
 		//System.out.println("The initial AVL tree has a maximum depth of "
 	//			+ dict2.depth());
 
+		
+		
+		
 		// Delete half the entries
 		fill();
 		for (int i = 0; i < (array_size/2) * array_size; i++) {
@@ -78,11 +70,15 @@ public class DictionaryTest {
 			//dict2.delete(new SortableString(entries[e]));
 		}
 
-		System.out.println("After deletes, the BST tree has a maximum depth of "
+		System.out.println("\nAfter deletes, the BST tree has a maximum depth of "
 						+ dict1.depth());
 		System.out.println("After deletes, the AVL tree has a maximum depth of "
 						+ dict2.depth());
 
+		
+		System.out.println("\n\nIn-order traversal of BST nodes after deletion: ");
+		dict1.printTree();
+		
 		// Add a quarter the entries
 		fill();
 		for (int i = 0; i < (array_size/4) * array_size; i++) {
@@ -96,7 +92,7 @@ public class DictionaryTest {
 		}
 
 		System.out
-				.println("After insertions, the BST tree has a maximum depth of "
+				.println("\nAfter insertions, the BST tree has a maximum depth of "
 						+ dict1.depth());
 		System.out
 				.println("After insertions, the AVL tree has a maximum depth of "
