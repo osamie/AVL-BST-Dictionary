@@ -41,7 +41,7 @@ public class DictionaryTest {
 			
 			dict1.insert(new SortableString(entries[e]), entries[e]);
 			
-			//dict2.insert(new SortableString(entries[e]), entries[e]);
+			dict2.insert(new SortableString(entries[e]), entries[e]);
 			entries[e] = null;
 		}
 		
@@ -52,8 +52,8 @@ public class DictionaryTest {
 		
 		System.out.println("The initial BST tree has a maximum depth of "
 				+ dict1.depth());
-		//System.out.println("The initial AVL tree has a maximum depth of "
-	//			+ dict2.depth());
+		System.out.println("The initial AVL tree has a maximum depth of "
+				+ dict2.depth());
 
 		
 		
@@ -67,7 +67,7 @@ public class DictionaryTest {
 			} while (entries[e] == null);
 
 			dict1.delete(new SortableString(entries[e]));
-			//dict2.delete(new SortableString(entries[e]));
+			dict2.delete(new SortableString(entries[e]));
 		}
 
 		System.out.println("\nAfter deletes, the BST tree has a maximum depth of "
@@ -78,6 +78,8 @@ public class DictionaryTest {
 		
 		System.out.println("\n\nIn-order traversal of BST nodes after deletion: ");
 		dict1.printTree();
+		System.out.println("\n\nIn-order traversal of BST nodes after deletion: ");
+		dict2.printTree();
 		
 		// Add a quarter the entries
 		fill();

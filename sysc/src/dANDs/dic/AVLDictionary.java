@@ -17,10 +17,23 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 
 	
 	public void printTree() {
-		// TODO Auto-generated method stub
+		printTree(root); 
 		
 	}
 
+	private void printTree(AVLNode<E,K> node) { 
+		 
+
+		if(node == null){
+			return;
+			
+		}
+		
+		 // left, node itself, right 
+		printTree(node.getLeft());
+		System.out.println(node.getElement());
+		printTree(node.getRight());
+	}
 	public int depth() {
 		
 		// TODO Auto-generated method stub
@@ -81,7 +94,7 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 		if(node == null)
 		{
 			node = new AVLNode<E,K>(key, element,null,null,0);
-			System.out.println("inserting: " + element);
+			System.out.println("(AVL Tree)inserting: " + element);
 			//System.out.println(" node here is : " + root.getElement());
 			return node;
 			
@@ -95,12 +108,32 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 			node.setLeft(insertItem(node.getLeft(),element,key));
 			//System.out.print(" Inserted " + element);
 			//System.out.print(" to the LEFT of: " + node.getElement() + " key: "+ key + "\n");
+			
+			if (checkAVLBalance(node)==-1) //if the node has a balance factor less than -1
+			{
+				rotateLeft(node);// rotate leftwards
+			}
+			else if(checkAVLBalance(node)==1) //else if the node has a balance factor > 1
+			{
+				rotateRight(node); //rotate rightwards
+			}
 			return node;
 		}
 		
 		else { // search the right subtree
 		      //newSubtree = insertItem(node.getRight(),element,key);
 		      node.setRight(insertItem(node.getRight(),element,key));
+		      
+		      if (checkAVLBalance(node)==-1) //if the node has a balance factor less than -1
+				{
+					rotateLeft(node);// rotate leftwards
+				}
+			  else if(checkAVLBalance(node)==1) //else if the node has a balance factor > 1
+				{
+					rotateRight(node); //rotate rightwards
+				}
+		      
+		      
 		      //System.out.print(" Inserted " + element);
 			//	System.out.print(" to the RIGHT of: " + node.getElement() + " key: "+ key + "\n");
 		      return node;
@@ -125,17 +158,17 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 	/**
 	checks whether the node is balanced or not after an insertion or deletion. 
 	If the depth of the right sub-tree minus the depth of the left subtree is greater than or equal to 2 then
-	it returns 1 to rotate the node leftwards. Similarly if the depth of the left
+	it returns 1 to rotate the node rightwards. Similarly if the depth of the left
 	subtree minus the depth of the right subtree is greater than or equal to 2
-	then it returns -1 to rotate the node rightwards. Otherwise it returns 0 and
+	then it returns -1 to rotate the node leftwards. Otherwise it returns 0 and
 	it means that no rotation is needed in that situation**/
 	
 	public int checkAVLBalance(AVLNode<E,K> node){
-		if(depth(node.right)-depth(node.left) >= 2)
+		if(depth(node.left)-depth(node.right) >= 2)
 		{
 			return 1;
 		}
-		else if(depth(node.left)-depth(node.right) >= 2)
+		else if(depth(node.right)-depth(node.left) >= 2)
 		{
 			return -1;
 		}

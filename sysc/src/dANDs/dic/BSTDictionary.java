@@ -38,7 +38,7 @@ public class BSTDictionary<E, K extends SortableString> implements Dictionary<E,
 	}
 	
 
-	private void printTree(BSTNode node) { 
+	private void printTree(BSTNode<E,K> node) { 
 		 /**if (node == null) {
 			 //return;
 			 System.out.println(" Cannot print tree ");
@@ -175,7 +175,7 @@ public class BSTDictionary<E, K extends SortableString> implements Dictionary<E,
 		if(node == null)
 		{
 			node = new BSTNode<E,K>(key, element,null,null);
-			System.out.println("inserting: " + element);
+			System.out.println("(BST Tree)inserting: " + element);
 			//System.out.println(" node here is : " + root.getElement());
 			return node;
 			
