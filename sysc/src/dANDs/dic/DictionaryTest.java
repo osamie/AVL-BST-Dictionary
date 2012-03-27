@@ -1,4 +1,7 @@
+
 package dANDs.dic;
+
+import java.util.*;
 // The "DictionaryTest" class.
 // This class tests two implementations of the Dictionary 
 // interface by inserting 676 different entries, removing 
@@ -8,11 +11,9 @@ package dANDs.dic;
 // randomly chosen entries in both dictionaries. Obviously,
 // the search result should be the same for both dictionaries.
 public class DictionaryTest {
-	private static int array_size = 3;
+	private static int array_size = 26;
 	protected static String[] entries = new String[array_size * array_size];
 	
-	
-
 	protected static void fill() {
 		// Insert 26 * 26 entries
 		for (int i = 0; i < array_size; i++)
@@ -25,9 +26,25 @@ public class DictionaryTest {
 	} // fill method
 
 	public static void main(String[] args) {
+		System.out.println("------------------------");
+		System.out.println("OSAZUWA OMIGIE 100764733");
+		System.out.println("SYSC 2100: ASSIGNMENT 5 ");
+		System.out.println("AVL AND BST DICTIONARY");
+		System.out.println("-----------------------");
+		System.out.println();
+		
 		BSTDictionary<String, SortableString> dict1 = new BSTDictionary<String, SortableString>();
 		AVLDictionary<String, SortableString> dict2 = new AVLDictionary<String, SortableString>();
 
+		//String[] st = {"AA","BB","AC","AG","AI","AJ","BE","BI","AR","AS","AV","BJ","AK","AM","AP","AQ","AZ","BA"};
+		/**String[] st = {"AA","BB","AC","AG","AI","AJ"};
+		for(int w = 0; w<st.length;w++){
+			dict1.insert(new SortableString(st[w]), st[w]);
+			dict2.insert(new SortableString(st[w]), st[w]);
+			
+		}**/
+		
+		
 		// Insert lots of entries	
 		fill();
 		//System.out.print("{");
@@ -46,12 +63,12 @@ public class DictionaryTest {
 			entries[e] = null;
 		}
 		
-		System.out.println("\nIn-order traversal of BST nodes after insertion: ");
-		dict1.printTree();
+		//System.out.println("\nIn-order traversal of BST nodes after insertion: ");
+		//dict1.printTree();
 		
 		// print the depth
 		
-		System.out.println("The initial BST tree has a maximum depth of "
+		System.out.println("The initial BST tree has a maxi nmum depth of "
 				+ dict1.depth());
 		System.out.println("The initial AVL tree has a maximum depth of "
 				+ dict2.depth());
@@ -78,9 +95,9 @@ public class DictionaryTest {
 
 		
 		System.out.println("\n\nIn-order traversal of BST nodes after deletion: ");
-		dict1.printTree();
+		//dict1.printTree();
 		System.out.println("\n\nIn-order traversal of AVL nodes after deletion: ");
-		dict2.printTree();
+		//dict2.printTree();
 		
 		// Add a quarter the entries
 		fill();
@@ -121,5 +138,10 @@ public class DictionaryTest {
 				System.out.println("found in Dict2.");
 			}
 		}
+		///boolean Bbal = (dict1.checkAVLBalance(dict1.root)==0)?true:false;
+		//boolean Abal = (dict2.checkAVLBalance(dict2.root)==0)?true:false;
+		System.out.println();
+		//System.out.println("Is BST Dictionary balanced?: " + Bbal );
+		//System.out.println("Is AVL Dictionary balanced?: " + Abal );
 	} // main method
 } /* DictionaryTest class */

@@ -7,43 +7,42 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 	//constructor: create a new AVL tree
 	public AVLDictionary(AVLNode<E,K> rt)//the root of the new tree will be passed to the constructor
 	{
-		root = rt; 		
+		root = rt; 		//initializes the root node of the AVLDictionary
 	}
 
 	//empty tree with depth of zero
 	public AVLDictionary() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	
 	public void printTree() {
-		printTree(root); 
+		printTree(root);  //printTree overload; starts traversing from the root node of the dictionary
 		
 	}
 
+	
 	private void printTree(AVLNode<E,K> node) { 
-		 
-
 		if(node == null){
-			return;
-			
+			return;		
 		}
 		
-		 // left, node itself, right 
-		printTree(node.getLeft());
-		System.out.println(node.getElement());
-		printTree(node.getRight());
+		//Now do an inorder traversal of the tree
+		// left, node itself, right 
+		printTree(node.getLeft());   //left subtree 
+		System.out.println(node.getElement());  //print the node
+		printTree(node.getRight()); //right subtree
 	}
-	public int depth() {
-		
-		// TODO Auto-generated method stub
-		return depth(root);
+	
+	//this function returns the depth of the entire dictionary
+	public int depth() 
+	{
+		return depth(root); //pass the rootnode of the dictionary to a helper function
 	}
 	
 	//this function will return the depth/levels of nodes in the tree
 	public int depth(AVLNode<E,K> av){
-		if(av == null) return 0;
-		
+		if(av == null) return 0;	
 		else
 		{
 			//recursively gather the depth of the left and right trees
@@ -82,73 +81,48 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 	@Override
 	public void insert(K key, E element) {
 		
-		root = insertItem(root,element,key);
-		
-		
-		// TODO Auto-generated method stub
-		
+		//use a helper function which takes in what root to begin the insertion from 
+		root = insertItem(root,element,key); //make an assignment to root i.e a method of passing root as a reference	
 	}
 	
 	public AVLNode<E,K> insertItem(AVLNode<E,K> node,E element, K key)
 	{
-		if(node == null)
+		if(node == null) //if the subtree where the new node should be inserted is empty/null 
 		{
-			node = new AVLNode<E,K>(key, element,null,null,0);
+			node = new AVLNode<E,K>(key, element,null,null,AVLNode.EVEN);  //
 			System.out.println("(AVL Tree)inserting: " + element);
 			//System.out.println(" node here is : " + root.getElement());
 			return node;
 			
 		}
-	    
-		//E nodeElement = node.getElement();
-		//BSTNode<E,K> newNode = new BSTNode<E,K>(key,element,null,null);
-		
 		else if(key.compareTo(node.getKey()) < 0 ) //LeftInsert : key is less than node.key
 		{
 			//newSubtree = insertItem(node.getLeft(),element,key);
 			node.setLeft(insertItem(node.getLeft(),element,key));
-			//System.out.print(" Inserted " + element);
-			//System.out.print(" to the LEFT of: " + node.getElement() + " key: "+ key + "\n");
-			
-			
-			
+					
 		}
 		
 		else { // search the right subtree
 		      //newSubtree = insertItem(node.getRight(),element,key);
-		      node.setRight(insertItem(node.getRight(),element,key));
-		      
-		      /**if (checkAVLBalance(node)==-1) //if the node has a balance factor less than -1
-				{
-					rotateLeft(node);// rotate leftwards
-				}
-			  else if(checkAVLBalance(node)==1) //else if the node has a balance factor > 1
-				{
-					rotateRight(node); //rotate rightwards
-				}
-		      **/
-		      
-		      //System.out.print(" Inserted " + element);
-			//	System.out.print(" to the RIGHT of: " + node.getElement() + " key: "+ key + "\n");
-		      
-		}  // end if
+		      node.setRight(insertItem(node.getRight(),element,key));   
+		}  
 		
 		
 		if (checkAVLBalance(node)==0) //if the node has a balance factor less than -1
 		{
-			System.out.println("Balanced tree after insertion");
+			//System.out.println("Balanced tree after insertion");
 			return node;
 			
 		}
 		else if(checkAVLBalance(node)==1) //else if the node has a balance factor > 1
 		{
 			node = rotateLeft(node);// rotate leftwards
-			System.out.println("rotated left!");
+			//System.out.println("rotated left!");
 			return node;
 		}
 		else{
-			node = rotateRight(node);
-			System.out.println("rotated right!");
+			node = rotateRight(node);  //rotate rightwards
+			//System.out.println("rotated right!");
 			return node;
 		}
 		
@@ -160,7 +134,8 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 		
 	}
 	
-	public AVLNode<E,K> deleteItem(AVLNode<E,K> rtnode ,K key){
+	public AVLNode<E,K> deleteItem(AVLNode<E,K> rtnode ,K key)
+	{
 		if(rtnode == null){
 			//throw new RuntimeException("item not found in: " + rtnode.getElement().toString());
 			//System.out.println("trying to delete a null node here!");
@@ -210,7 +185,7 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 	}
 	
 	public AVLNode<E,K> deleteNode(AVLNode<E,K> node){
-System.out.println("deleting node: " + node.getElement());
+		System.out.println("Deleting node: " + node.getElement());
 		
 		//if the node is a leaf
 		if((node.getLeft() == null) && (node.getRight() == null))
@@ -238,8 +213,11 @@ System.out.println("deleting node: " + node.getElement());
 		}
 	}
 	
+	
+	
 	public AVLNode<E,K> deleteLeftmost(AVLNode<E,K> node){
-		if(node.getLeft() ==  null){
+		if(node.getLeft() ==  null)
+		{
 			return node.getRight();
 		}
 		else{
@@ -297,22 +275,26 @@ System.out.println("deleting node: " + node.getElement());
 	 * rotates left only when the balance factor 
 	 */
 	public AVLNode<E,K> rotateLeft(AVLNode<E,K> n)
-	{
-		//if ((n.getLeft()==null)||(n.getLeft()==null)) {
-			//return n;
-		//}
-		
-		
-		
-		//Try rotating left...if the required nodes are present
+	{				
+		//Try rotating left...if the required subtrees are present
 		try{
-			AVLNode<E,K> pivot = n.getRight();
-			AVLNode<E,K> rootLeft = n.getLeft();
-			AVLNode<E,K> pivotLeft = pivot.getLeft();
-			AVLNode<E,K> pivotRight = pivot.getRight();
+			AVLNode<E,K> pivot = n.getRight(); //the right subtree of the node
+			AVLNode<E,K> rootLeft = n.getLeft();  //the left subtree of the node
+			AVLNode<E,K> pivotLeft = pivot.getLeft(); //the left subtree of the right subtree of the node
+			AVLNode<E,K> pivotRight = pivot.getRight(); //the right subtree of the right subtree of the node
 			
-			n = new AVLNode<E,K>(n.getKey(),n.element,rootLeft,pivotLeft, n.getBalance());
-			pivot = new AVLNode<E,K>(pivot.getKey(),pivot.getElement(),n,pivotRight,pivot.getBalance());
+			
+			//the left child of the node remains unchanged as node.left
+			//the left child of the right subtree of the node becomes the node's right    
+			n = new AVLNode<E,K>(n.getKey(),n.element,rootLeft,pivotLeft, n.getBalance()); 
+			
+			 
+			pivot = new AVLNode<E,K>(
+					pivot.getKey(),   
+					pivot.getElement(),
+					n,    //left child of pivot
+					pivotRight, //right child of pivot
+					pivot.getBalance());
 			
 			return pivot;
 		
@@ -321,16 +303,8 @@ System.out.println("deleting node: " + node.getElement());
 			//System.out.println("null pointer Exception here: unable to rotate " + n.getElement() + " left");
 			
 		}
-		return n;
+		return n; //we need to return the origin node unchanged, since the rotate did not happen
 			
-		//AVLNode q =root;
-		//AVLNode p = q.right;
-		//AVLNode c = q.left;
-		//AVLNode a = p.left;
-		//AVLNode b = p.right;
-		//q = new AVLNode(q.key,c,a,q.getBalance());
-		//p = new AVLNode(p.data,q,b);
-	//return p;
 	}
 	
 	public AVLNode<E,K> rotateRight(AVLNode<E,K> n){

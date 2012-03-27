@@ -311,6 +311,28 @@ public class BSTDictionary<E, K extends SortableString> implements Dictionary<E,
 	
 	
 	
+public int checkAVLBalance(BSTNode<E,K> node){
+		
+		//return depth(node.left)-depth(node.right);
+		
+		
+		if(depth(node.right)-depth(node.left) >= 2)
+		{
+			return 1;
+		}
+		else if(depth(node.left)-depth(node.right) >= 2)
+		{
+			return -1;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	
+	
+	
+	
 	
 
 
