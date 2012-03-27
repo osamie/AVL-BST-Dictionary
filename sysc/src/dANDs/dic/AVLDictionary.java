@@ -136,18 +136,18 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 		
 		if (checkAVLBalance(node)==0) //if the node has a balance factor less than -1
 		{
-			System.out.println("safe insert to the left");
+			System.out.println("Balanced tree after insertion");
 			return node;
 			
 		}
-		else if(checkAVLBalance(node)>=2) //else if the node has a balance factor > 1
+		else if(checkAVLBalance(node)==1) //else if the node has a balance factor > 1
 		{
-			rotateLeft(node);// rotate leftwards
+			node = rotateLeft(node);// rotate leftwards
 			System.out.println("rotated left!");
 			return node;
 		}
 		else{
-			rotateRight(node);
+			node = rotateRight(node);
 			System.out.println("rotated right!");
 			return node;
 		}
@@ -166,7 +166,7 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 			//System.out.println("trying to delete a null node here!");
 			return null;
 		}
-		else{
+		//else{
 			if(rtnode.getKey().compareTo(key) == 0) //if the keys are the same
 			{
 				return deleteNode(rtnode);
@@ -180,13 +180,32 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 				
 			}
 			
-			else{
+			//else{
 				rtnode.setRight(deleteItem(rtnode.getRight(),key) );
-				return rtnode;
-			}
+				
+			//}
 		
+		//}
+		
+		if (checkAVLBalance(rtnode)==0) //if the node has a balance factor less than -1
+		{
+			System.out.println("Balanced tree after deletion");
+			//return rtnode;
+			
+		}
+		else if(checkAVLBalance(rtnode)==1) //else if the node has a balance factor > 1
+		{
+			rtnode = rotateLeft(rtnode);// rotate leftwards
+			System.out.println("rotated left!");
+			//return rtnode;
+		}
+		else{
+			rtnode = rotateRight(rtnode);
+			System.out.println("rotated right!");
+			//return rtnode;
 		}
 		
+		return rtnode;
 		
 	}
 	
@@ -256,21 +275,21 @@ System.out.println("deleting node: " + node.getElement());
 	
 	public int checkAVLBalance(AVLNode<E,K> node){
 		
-		return depth(node.left)-depth(node.right);
+		//return depth(node.left)-depth(node.right);
 		
-		/**
-		if(depth(node.left)-depth(node.right) >= 2)
+		
+		if(depth(node.right)-depth(node.left) >= 2)
 		{
 			return 1;
 		}
-		else if(depth(node.right)-depth(node.left) >= 2)
+		else if(depth(node.left)-depth(node.right) >= 2)
 		{
 			return -1;
 		}
 		else
 		{
 			return 0;
-		}**/
+		}
 	}
 	
 	
