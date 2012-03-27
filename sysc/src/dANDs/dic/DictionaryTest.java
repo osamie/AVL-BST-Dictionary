@@ -8,7 +8,7 @@ package dANDs.dic;
 // randomly chosen entries in both dictionaries. Obviously,
 // the search result should be the same for both dictionaries.
 public class DictionaryTest {
-	private static int array_size = 13;
+	private static int array_size = 2;
 	protected static String[] entries = new String[array_size * array_size];
 	
 	
@@ -42,6 +42,7 @@ public class DictionaryTest {
 			dict1.insert(new SortableString(entries[e]), entries[e]);
 			
 			dict2.insert(new SortableString(entries[e]), entries[e]);
+			System.out.println();
 			entries[e] = null;
 		}
 		
@@ -78,7 +79,7 @@ public class DictionaryTest {
 		
 		System.out.println("\n\nIn-order traversal of BST nodes after deletion: ");
 		dict1.printTree();
-		System.out.println("\n\nIn-order traversal of BST nodes after deletion: ");
+		System.out.println("\n\nIn-order traversal of AVL nodes after deletion: ");
 		dict2.printTree();
 		
 		// Add a quarter the entries

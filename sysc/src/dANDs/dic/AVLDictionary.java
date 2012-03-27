@@ -37,7 +37,7 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 	public int depth() {
 		
 		// TODO Auto-generated method stub
-		return 0;
+		return depth(root);
 	}
 	
 	//this function will return the depth/levels of nodes in the tree
@@ -103,28 +103,22 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 		//E nodeElement = node.getElement();
 		//BSTNode<E,K> newNode = new BSTNode<E,K>(key,element,null,null);
 		
-		else if(key.compareTo(node.getKey()) < 0 ){
+		else if(key.compareTo(node.getKey()) < 0 ) //LeftInsert : key is less than node.key
+		{
 			//newSubtree = insertItem(node.getLeft(),element,key);
 			node.setLeft(insertItem(node.getLeft(),element,key));
 			//System.out.print(" Inserted " + element);
 			//System.out.print(" to the LEFT of: " + node.getElement() + " key: "+ key + "\n");
 			
-			if (checkAVLBalance(node)==-1) //if the node has a balance factor less than -1
-			{
-				rotateLeft(node);// rotate leftwards
-			}
-			else if(checkAVLBalance(node)==1) //else if the node has a balance factor > 1
-			{
-				rotateRight(node); //rotate rightwards
-			}
-			return node;
+			
+			
 		}
 		
 		else { // search the right subtree
 		      //newSubtree = insertItem(node.getRight(),element,key);
 		      node.setRight(insertItem(node.getRight(),element,key));
 		      
-		      if (checkAVLBalance(node)==-1) //if the node has a balance factor less than -1
+		      /**if (checkAVLBalance(node)==-1) //if the node has a balance factor less than -1
 				{
 					rotateLeft(node);// rotate leftwards
 				}
@@ -132,12 +126,32 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 				{
 					rotateRight(node); //rotate rightwards
 				}
-		      
+		      **/
 		      
 		      //System.out.print(" Inserted " + element);
 			//	System.out.print(" to the RIGHT of: " + node.getElement() + " key: "+ key + "\n");
-		      return node;
+		      
 		}  // end if
+		
+		
+		if (checkAVLBalance(node)==0) //if the node has a balance factor less than -1
+		{
+			System.out.println("safe insert to the left");
+			return node;
+			
+		}
+		else if(checkAVLBalance(node)>=2) //else if the node has a balance factor > 1
+		{
+			rotateLeft(node);// rotate leftwards
+			System.out.println("rotated left!");
+			return node;
+		}
+		else{
+			rotateRight(node);
+			System.out.println("rotated right!");
+			return node;
+		}
+		
 	}
 
 	@Override
@@ -164,6 +178,10 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 	it means that no rotation is needed in that situation**/
 	
 	public int checkAVLBalance(AVLNode<E,K> node){
+		
+		return depth(node.left)-depth(node.right);
+		
+		/**
 		if(depth(node.left)-depth(node.right) >= 2)
 		{
 			return 1;
@@ -175,7 +193,7 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 		else
 		{
 			return 0;
-		}
+		}**/
 	}
 	
 	
@@ -184,24 +202,30 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 	 */
 	public AVLNode<E,K> rotateLeft(AVLNode<E,K> n)
 	{
-		//only if there is are right and left children
+		//if ((n.getLeft()==null)||(n.getLeft()==null)) {
+			//return n;
+		//}
+		
+		
+		
+		//Try rotating left...if the required nodes are present
 		try{
 			AVLNode<E,K> pivot = n.getRight();
 			AVLNode<E,K> rootLeft = n.getLeft();
 			AVLNode<E,K> pivotLeft = pivot.getLeft();
 			AVLNode<E,K> pivotRight = pivot.getRight();
 			
-			n = new AVLNode(n.getKey(),n.element,rootLeft,pivotLeft, n.getBalance());
-			pivot = new AVLNode(pivot.getKey(),pivot.getElement(),n,pivotLeft,pivot.getBalance());
+			n = new AVLNode<E,K>(n.getKey(),n.element,rootLeft,pivotLeft, n.getBalance());
+			pivot = new AVLNode<E,K>(pivot.getKey(),pivot.getElement(),n,pivotRight,pivot.getBalance());
 			
 			return pivot;
 		
 		}
 		catch(NullPointerException e){
-			System.out.println("null pointer Exception here:" + e.getMessage());
+			//System.out.println("null pointer Exception here: unable to rotate " + n.getElement() + " left");
 			
 		}
-		return null;
+		return n;
 			
 		//AVLNode q =root;
 		//AVLNode p = q.right;
@@ -215,23 +239,24 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 	
 	public AVLNode<E,K> rotateRight(AVLNode<E,K> n){
 		
+		//Try rotating right...if the required nodes are present
 		try{
 			AVLNode<E,K> pivot = n.getLeft();
 			AVLNode<E,K> rootRight = n.getRight();
 			AVLNode<E,K> pivotLeft = pivot.getLeft();
 			AVLNode<E,K> pivotRight = pivot.getRight();
 			
-			n = new AVLNode(n.getKey(),n.getElement(),pivotRight,rootRight, n.getBalance());
-			pivot = new AVLNode(pivot.getKey(),pivot.getElement(),pivotLeft,n,pivot.getBalance());
+			n = new AVLNode<E,K>(n.getKey(),n.getElement(),pivotRight,rootRight, n.getBalance());
+			pivot = new AVLNode<E, K>(pivot.getKey(),pivot.getElement(),pivotLeft,n,pivot.getBalance());
 			
 			return pivot;
 		
 		}
 		catch(NullPointerException e){
-			System.out.println("null pointer Exception here: " + e.getMessage());
+			//System.out.println("null pointer Exception here: unable to rotate " + n.getElement() + " right");
 			
 		}
-		return null;
+		return n;
 		
 	}
 	
