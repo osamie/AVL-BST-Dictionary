@@ -8,7 +8,7 @@ package dANDs.dic;
 // randomly chosen entries in both dictionaries. Obviously,
 // the search result should be the same for both dictionaries.
 public class DictionaryTest {
-	private static int array_size = 2;
+	private static int array_size = 22;
 	protected static String[] entries = new String[array_size * array_size];
 	
 	

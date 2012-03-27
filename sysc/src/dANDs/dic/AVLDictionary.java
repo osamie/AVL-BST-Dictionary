@@ -156,11 +156,88 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 
 	@Override
 	public void delete(K key) {
-		// TODO Auto-generated method stub
+		root = deleteItem(root,key); //making a reference to the subtree that will be altered
 		
 	}
 	
+	public AVLNode<E,K> deleteItem(AVLNode<E,K> rtnode ,K key){
+		if(rtnode == null){
+			//throw new RuntimeException("item not found in: " + rtnode.getElement().toString());
+			//System.out.println("trying to delete a null node here!");
+			return null;
+		}
+		else{
+			if(rtnode.getKey().compareTo(key) == 0) //if the keys are the same
+			{
+				return deleteNode(rtnode);
+				
+			}
+			
+			else if(key.compareTo(rtnode.getKey()) < 0) //rtnode.key > key
+			{
+				rtnode.setLeft(deleteItem(rtnode.getLeft(),key) );
+				return rtnode;
+				
+			}
+			
+			else{
+				rtnode.setRight(deleteItem(rtnode.getRight(),key) );
+				return rtnode;
+			}
+		
+		}
+		
+		
+	}
 	
+	public AVLNode<E,K> deleteNode(AVLNode<E,K> node){
+System.out.println("deleting node: " + node.getElement());
+		
+		//if the node is a leaf
+		if((node.getLeft() == null) && (node.getRight() == null))
+		{
+			return null;
+			
+		}
+		
+		//if node has no left child
+		else if (node.getLeft() == null){
+			return node.getRight();
+		}
+		
+		//if node has no right child
+		else if (node.getRight() == null){
+			return node.getLeft();
+		}
+		
+		//if the tree has 2 children
+		else{
+			node.setElement(findLeftmost(node.getRight()));
+			node.setRight(deleteLeftmost(node.getRight()));
+			return node;
+			
+		}
+	}
+	
+	public AVLNode<E,K> deleteLeftmost(AVLNode<E,K> node){
+		if(node.getLeft() ==  null){
+			return node.getRight();
+		}
+		else{
+			node.setLeft(deleteLeftmost(node.getLeft()));
+			return node;
+		}	
+	}
+	
+	public E findLeftmost(AVLNode<E,K> node){
+		if(node.getLeft() == null){
+			return node.getElement();
+		}
+		else{
+			return findLeftmost(node.getLeft());
+		}
+		
+	}
 	
 	/**
 	 * check whether the tree is balanced or not
