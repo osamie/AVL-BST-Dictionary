@@ -8,7 +8,7 @@ public class BSTDictionary<E, K extends SortableString> implements Dictionary<E,
 
 	public int depth() {
 		
-		// TODO Auto-generated method stub
+		
 		return depth(root);
 	}
 	
@@ -29,11 +29,8 @@ public class BSTDictionary<E, K extends SortableString> implements Dictionary<E,
 		
 		//in-order traversal of BST
 		
-		
 		printTree(root); 
 		//System.out.println(); 
-		
-		
 		
 	}
 	
@@ -86,8 +83,8 @@ public class BSTDictionary<E, K extends SortableString> implements Dictionary<E,
 		//findLeftmost(root)
 		//System.out.println("starting to print");
 		
-		if(node == null) 
-			System.out.println("Empty node HERE!");
+		if(node == null);
+			//System.out.println("Empty node HERE!");
 		
 		//if the visited node is a leaf (i.e has no right/left children)
 		else if((node.getLeft() == null) && (node.getRight() == null))
@@ -163,8 +160,7 @@ public class BSTDictionary<E, K extends SortableString> implements Dictionary<E,
 			
 		}**/
 		 root = insertItem(root,element,key);
-		// TODO Auto-generated method stub
-		
+			
 	}
 
 		
@@ -175,7 +171,7 @@ public class BSTDictionary<E, K extends SortableString> implements Dictionary<E,
 		if(node == null)
 		{
 			node = new BSTNode<E,K>(key, element,null,null);
-			System.out.println("(BST Tree)inserting: " + element);
+			//System.out.println("(BST Tree)inserting: " + element);
 			//System.out.println(" node here is : " + root.getElement());
 			return node;
 			
@@ -258,7 +254,7 @@ public class BSTDictionary<E, K extends SortableString> implements Dictionary<E,
 	 */
 	public BSTNode<E,K> deleteNode(BSTNode<E,K> node){
 		
-		System.out.println("deleting node: " + node.getElement());
+		System.out.println("Deleting BST node: " + node.getElement());
 		
 		//if the node is a leaf
 		if((node.getLeft() == null) && (node.getRight() == null))
@@ -308,9 +304,7 @@ public class BSTDictionary<E, K extends SortableString> implements Dictionary<E,
 		
 	}
 	
-	
-	
-	
+
 public int checkAVLBalance(BSTNode<E,K> node){
 		
 		//return depth(node.left)-depth(node.right);
@@ -331,11 +325,6 @@ public int checkAVLBalance(BSTNode<E,K> node){
 	}
 	
 	
-	
-	
-	
-
-
 
 	
 }

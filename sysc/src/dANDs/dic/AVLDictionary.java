@@ -89,8 +89,8 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 	{
 		if(node == null) //if the subtree where the new node should be inserted is empty/null 
 		{
-			node = new AVLNode<E,K>(key, element,null,null,AVLNode.EVEN);  //
-			System.out.println("(AVL Tree)inserting: " + element);
+			node = new AVLNode<E,K>(key, element,null,null,0);  //
+			//System.out.println("(AVL Tree)inserting: " + element);
 			//System.out.println(" node here is : " + root.getElement());
 			return node;
 			
@@ -114,17 +114,47 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 			return node;
 			
 		}
-		else if(checkAVLBalance(node)==1) //else if the node has a balance factor > 1
+		else if(checkAVLBalance(node)==-1) //subtree is more right
 		{
-			node = rotateLeft(node);// rotate leftwards
+			AVLNode<E,K> R = node.getRight();
+			AVLNode<E,K> L = node.getLeft();
+			if((depth(R.getLeft()) - depth(R.getRight()))==-1 ){
+				node = rotateLeft(node);// rotate leftwards
+			}
+			
+			else if((depth(R.getLeft()) - depth(R.getRight()))==1 ){
+				node.setRight(rotateRight(R)); //right rotation, R as the root
+				node = rotateLeft(node);// rotate leftwards
+			}
+			
 			//System.out.println("rotated left!");
 			return node;
 		}
-		else{
-			node = rotateRight(node);  //rotate rightwards
-			//System.out.println("rotated right!");
+		
+		else if(checkAVLBalance(node)==1) //subtree is more right
+		{
+			AVLNode<E,K> R = node.getRight();
+			AVLNode<E,K> L = node.getLeft();
+			if((depth(L.getLeft()) - depth(L.getRight()))==1 ){
+				node = rotateRight(node);// rotate leftwards
+			}
+			
+			else if((depth(L.getLeft()) - depth(L.getRight()))==-1 ){
+				node.setLeft(rotateLeft(L)); //right rotation, R as the root
+				node = rotateRight(node); // rotate leftwards
+			}
+			
+			//System.out.println("rotated left!");
 			return node;
 		}
+		
+		//else{
+			//node = rotateRight(node);  //rotate rightwards
+			//System.out.println("rotated right!");
+			//return node;
+		//}
+		
+		return node;
 		
 	}
 
@@ -161,7 +191,49 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 			//}
 		
 		//}
-		
+				
+				
+				if (checkAVLBalance(rtnode)==0) //if the node has a balance factor less than -1
+				{
+					//System.out.println("Balanced tree after insertion");
+					return rtnode;
+					
+				}
+				else if(checkAVLBalance(rtnode)==-1) //subtree is more right
+				{
+					AVLNode<E,K> R = rtnode.getRight();
+					AVLNode<E,K> L = rtnode.getLeft();
+					if((depth(R.getLeft()) - depth(R.getRight()))==-1 ){
+						rtnode = rotateLeft(rtnode);// rotate leftwards
+					}
+					
+					else if((depth(R.getLeft()) - depth(R.getRight()))==1 ){
+						rtnode.setRight(rotateRight(R)); //right rotation, R as the root
+						rtnode = rotateLeft(rtnode);// rotate leftwards
+					}
+					
+					//System.out.println("rotated left!");
+					return rtnode;
+				}
+				
+				else if(checkAVLBalance(rtnode)==1) //subtree is more right
+				{
+					AVLNode<E,K> R = rtnode.getRight();
+					AVLNode<E,K> L = rtnode.getLeft();
+					if((depth(L.getLeft()) - depth(L.getRight()))==1 ){
+						rtnode = rotateRight(rtnode);// rotate leftwards
+					}
+					
+					else if((depth(L.getLeft()) - depth(L.getRight()))==-1 ){
+						rtnode.setLeft(rotateLeft(L)); //right rotation, R as the root
+						rtnode = rotateRight(rtnode); // rotate leftwards
+					}
+					
+					//System.out.println("rotated left!");
+					return rtnode;
+				}
+				
+		/**
 		if (checkAVLBalance(rtnode)==0) //if the node has a balance factor less than -1
 		{
 			System.out.println("Balanced tree after deletion");
@@ -179,13 +251,13 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 			System.out.println("rotated right!");
 			//return rtnode;
 		}
-		
+		**/
 		return rtnode;
 		
 	}
 	
 	public AVLNode<E,K> deleteNode(AVLNode<E,K> node){
-		System.out.println("Deleting node: " + node.getElement());
+		System.out.println("Deleting AVL node: " + node.getElement());
 		
 		//if the node is a leaf
 		if((node.getLeft() == null) && (node.getRight() == null))
@@ -226,12 +298,16 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 		}	
 	}
 	
-	public E findLeftmost(AVLNode<E,K> node){
-		if(node.getLeft() == null){
-			return node.getElement();
+	
+	//returns the leftmost element in the subtree
+	public E findLeftmost(AVLNode<E,K> node)
+	{
+		if(node.getLeft() == null)//if the left subtree is empty
+		{
+			return node.getElement(); //then return the node's element
 		}
 		else{
-			return findLeftmost(node.getLeft());
+			return findLeftmost(node.getLeft()); //recursively the leftmost element of the left subtree 
 		}
 		
 	}
@@ -246,21 +322,33 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 	/**
 	checks whether the node is balanced or not after an insertion or deletion. 
 	If the depth of the right sub-tree minus the depth of the left subtree is greater than or equal to 2 then
-	it returns 1 to rotate the node rightwards. Similarly if the depth of the left
-	subtree minus the depth of the right subtree is greater than or equal to 2
-	then it returns -1 to rotate the node leftwards. Otherwise it returns 0 and
-	it means that no rotation is needed in that situation**/
+	it returns 1 to rotate the node rightwards. **/
 	
 	public int checkAVLBalance(AVLNode<E,K> node){
 		
 		//return depth(node.left)-depth(node.right);
 		
-		
-		if(depth(node.right)-depth(node.left) >= 2)
+		if(depth(node.left)-depth(node.right) >= 2)//if subtree is moreLeft 
 		{
 			return 1;
 		}
-		else if(depth(node.left)-depth(node.right) >= 2)
+		
+		else if((depth(node.right)-depth(node.left) >= 2 )) //if subtree is more right
+		{
+			return -1;
+		}
+		else{
+			return 0;
+		}
+		
+		
+		
+		/**
+		if(depth(node.right)-depth(node.left) >= 2)//if subtree is more 
+		{
+			return 1;
+		}
+		else if(depth(node.left)-depth(node.right) > 2)
 		{
 			return -1;
 		}
@@ -268,6 +356,8 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 		{
 			return 0;
 		}
+		**/
+		
 	}
 	
 	

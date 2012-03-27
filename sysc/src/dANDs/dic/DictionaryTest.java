@@ -26,23 +26,18 @@ public class DictionaryTest {
 	} // fill method
 
 	public static void main(String[] args) {
-		System.out.println("------------------------");
-		System.out.println("OSAZUWA OMIGIE 100764733");
-		System.out.println("SYSC 2100: ASSIGNMENT 5 ");
-		System.out.println("AVL AND BST DICTIONARY");
-		System.out.println("-----------------------");
+		System.out.println("		------------------------");
+		System.out.println("		OSAZUWA OMIGIE 100764733");
+		System.out.println("		SYSC 2100: ASSIGNMENT 5 ");
+		System.out.println("		AVL AND BST DICTIONARY");
+		System.out.println("		-----------------------");
 		System.out.println();
+		
 		
 		BSTDictionary<String, SortableString> dict1 = new BSTDictionary<String, SortableString>();
 		AVLDictionary<String, SortableString> dict2 = new AVLDictionary<String, SortableString>();
 
-		//String[] st = {"AA","BB","AC","AG","AI","AJ","BE","BI","AR","AS","AV","BJ","AK","AM","AP","AQ","AZ","BA"};
-		/**String[] st = {"AA","BB","AC","AG","AI","AJ"};
-		for(int w = 0; w<st.length;w++){
-			dict1.insert(new SortableString(st[w]), st[w]);
-			dict2.insert(new SortableString(st[w]), st[w]);
-			
-		}**/
+		
 		
 		
 		// Insert lots of entries	
@@ -59,16 +54,24 @@ public class DictionaryTest {
 			dict1.insert(new SortableString(entries[e]), entries[e]);
 			
 			dict2.insert(new SortableString(entries[e]), entries[e]);
-			System.out.println();
+			//System.out.println();
 			entries[e] = null;
 		}
+		System.out.println("\n -----------------------------------------------------");
+		System.out.println("In-order traversal of BST nodes after insertion: ");
+		dict1.printTree();
+		System.out.println("----------------end of BST node traversal--------------------------------");
 		
-		//System.out.println("\nIn-order traversal of BST nodes after insertion: ");
-		//dict1.printTree();
+		
+		System.out.println("\n -----------------------------------------------------");
+		System.out.println("In-order traversal of AVL nodes after insertion: ");
+		dict2.printTree();
+		System.out.println("----------------end of AVL node traversal--------------------------------");
+		
 		
 		// print the depth
 		
-		System.out.println("The initial BST tree has a maxi nmum depth of "
+		System.out.println("The initial BST tree has a maximum depth of "
 				+ dict1.depth());
 		System.out.println("The initial AVL tree has a maximum depth of "
 				+ dict2.depth());
@@ -93,11 +96,15 @@ public class DictionaryTest {
 		System.out.println("After deletes, the AVL tree has a maximum depth of "
 						+ dict2.depth());
 
+		System.out.println("\n -----------------------------------------------------");
+		System.out.println("In-order traversal of BST nodes after deletion: ");
+		dict1.printTree();
+		System.out.println("----------------end of BST node traversal--------------------------------");
 		
-		System.out.println("\n\nIn-order traversal of BST nodes after deletion: ");
-		//dict1.printTree();
-		System.out.println("\n\nIn-order traversal of AVL nodes after deletion: ");
-		//dict2.printTree();
+		System.out.println("\n -----------------------------------------------------");
+		System.out.println("In-order traversal of AVL nodes after deletion: ");
+		dict2.printTree();
+		System.out.println("----------------end of AVL node traversal--------------------------------");
 		
 		// Add a quarter the entries
 		fill();
