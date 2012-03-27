@@ -30,7 +30,7 @@ public class SortableString implements Sortable {
 		throw new RuntimeException("wrong type compare");
 	}
 	
-	//not really needed but..
+	
 	public String toString(){
 		return str;//.toString();
 		
