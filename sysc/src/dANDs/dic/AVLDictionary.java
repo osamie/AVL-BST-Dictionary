@@ -108,7 +108,7 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 		}  
 		
 		
-		if (checkAVLBalance(node)==0) //if the node has a balance factor less than -1
+		if (checkAVLBalance(node)==0) 
 		{
 			//System.out.println("Balanced tree after insertion");
 			return node;
@@ -148,12 +148,6 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 			return node;
 		}
 		
-		//else{
-			//node = rotateRight(node);  //rotate rightwards
-			//System.out.println("rotated right!");
-			//return node;
-		//}
-		
 		return node;
 		
 	}
@@ -181,77 +175,50 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 			else if(key.compareTo(rtnode.getKey()) < 0) //rtnode.key > key
 			{
 				rtnode.setLeft(deleteItem(rtnode.getLeft(),key) );
+				return rtnode;		
+			}
+					
+			rtnode.setRight(deleteItem(rtnode.getRight(),key) );
+					
+			if (checkAVLBalance(rtnode)==0) //if the node has a balance factor less than -1
+			{
+				//System.out.println("Balanced tree after insertion");
 				return rtnode;
 				
 			}
+			else if(checkAVLBalance(rtnode)==-1) //subtree is more right
+			{
+				AVLNode<E,K> R = rtnode.getRight();
+				AVLNode<E,K> L = rtnode.getLeft();
+				if((depth(R.getLeft()) - depth(R.getRight()))==-1 ){
+					rtnode = rotateLeft(rtnode);// rotate leftwards
+				}
+				
+				else if((depth(R.getLeft()) - depth(R.getRight()))==1 ){
+					rtnode.setRight(rotateRight(R)); //right rotation, R as the root
+					rtnode = rotateLeft(rtnode);// rotate leftwards
+				}
+				
+				//System.out.println("rotated left!");
+				return rtnode;
+			}
 			
-			//else{
-				rtnode.setRight(deleteItem(rtnode.getRight(),key) );
-				
-			//}
-		
-		//}
-				
-				
-				if (checkAVLBalance(rtnode)==0) //if the node has a balance factor less than -1
-				{
-					//System.out.println("Balanced tree after insertion");
-					return rtnode;
-					
-				}
-				else if(checkAVLBalance(rtnode)==-1) //subtree is more right
-				{
-					AVLNode<E,K> R = rtnode.getRight();
-					AVLNode<E,K> L = rtnode.getLeft();
-					if((depth(R.getLeft()) - depth(R.getRight()))==-1 ){
-						rtnode = rotateLeft(rtnode);// rotate leftwards
-					}
-					
-					else if((depth(R.getLeft()) - depth(R.getRight()))==1 ){
-						rtnode.setRight(rotateRight(R)); //right rotation, R as the root
-						rtnode = rotateLeft(rtnode);// rotate leftwards
-					}
-					
-					//System.out.println("rotated left!");
-					return rtnode;
+			else if(checkAVLBalance(rtnode)==1) //subtree is more right
+			{
+				AVLNode<E,K> R = rtnode.getRight();
+				AVLNode<E,K> L = rtnode.getLeft();
+				if((depth(L.getLeft()) - depth(L.getRight()))==1 ){
+					rtnode = rotateRight(rtnode);// rotate leftwards
 				}
 				
-				else if(checkAVLBalance(rtnode)==1) //subtree is more right
-				{
-					AVLNode<E,K> R = rtnode.getRight();
-					AVLNode<E,K> L = rtnode.getLeft();
-					if((depth(L.getLeft()) - depth(L.getRight()))==1 ){
-						rtnode = rotateRight(rtnode);// rotate leftwards
-					}
-					
-					else if((depth(L.getLeft()) - depth(L.getRight()))==-1 ){
-						rtnode.setLeft(rotateLeft(L)); //right rotation, R as the root
-						rtnode = rotateRight(rtnode); // rotate leftwards
-					}
-					
-					//System.out.println("rotated left!");
-					return rtnode;
+				else if((depth(L.getLeft()) - depth(L.getRight()))==-1 ){
+					rtnode.setLeft(rotateLeft(L)); //right rotation, R as the root
+					rtnode = rotateRight(rtnode); // rotate leftwards
 				}
 				
-		/**
-		if (checkAVLBalance(rtnode)==0) //if the node has a balance factor less than -1
-		{
-			System.out.println("Balanced tree after deletion");
-			//return rtnode;
-			
-		}
-		else if(checkAVLBalance(rtnode)==1) //else if the node has a balance factor > 1
-		{
-			rtnode = rotateLeft(rtnode);// rotate leftwards
-			System.out.println("rotated left!");
-			//return rtnode;
-		}
-		else{
-			rtnode = rotateRight(rtnode);
-			System.out.println("rotated right!");
-			//return rtnode;
-		}
-		**/
+				//System.out.println("rotated left!");
+				return rtnode;
+			}
 		return rtnode;
 		
 	}
@@ -341,23 +308,6 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 			return 0;
 		}
 		
-		
-		
-		/**
-		if(depth(node.right)-depth(node.left) >= 2)//if subtree is more 
-		{
-			return 1;
-		}
-		else if(depth(node.left)-depth(node.right) > 2)
-		{
-			return -1;
-		}
-		else
-		{
-			return 0;
-		}
-		**/
-		
 	}
 	
 	
@@ -391,7 +341,7 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 		}
 		catch(NullPointerException e){
 			//System.out.println("null pointer Exception here: unable to rotate " + n.getElement() + " left");
-			
+			//TODO: handle exception
 		}
 		return n; //we need to return the origin node unchanged, since the rotate did not happen
 			
@@ -414,7 +364,7 @@ public class AVLDictionary<E, K extends Sortable> implements Dictionary<E,K>{
 		}
 		catch(NullPointerException e){
 			//System.out.println("null pointer Exception here: unable to rotate " + n.getElement() + " right");
-			
+			//TODO: handle exception
 		}
 		return n;
 		

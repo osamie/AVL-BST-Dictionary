@@ -5,10 +5,7 @@ public class BSTDictionary<E, K extends SortableString> implements Dictionary<E,
  
 	BSTNode<E,K> root = null;
 	
-
 	public int depth() {
-		
-		
 		return depth(root);
 	}
 	
@@ -26,11 +23,9 @@ public class BSTDictionary<E, K extends SortableString> implements Dictionary<E,
 	
 	public void printTree() {
 		//System.out.print(root.getElement() + " and depth is:" + depth() + "\n");
-		printTree(root); 
-		
+		printTree(root); 	
 	}
 	
-
 	private void printTree(BSTNode<E,K> node) { 
 		
 		if(node == null){
@@ -41,40 +36,13 @@ public class BSTDictionary<E, K extends SortableString> implements Dictionary<E,
 		printTree(node.getLeft());
 		System.out.println(node.getElement());
 		printTree(node.getRight());
-		
-		/**
-		if ((node.getLeft() == null) && node.getRight()==null ){
-			//System.out.println(node.getElement());
-			System.out.println("leaf node: " + node.getElement());
-		}
-		else{
-			if(node.getLeft()==null){
-		
-				System.out.println(node.getElement() +  " ->right: " + node.getRight().getElement()  );
-			}
-			
-			else if(node.getRight()==null){
-				System.out.println(node.getElement() +  "-> left: " + node.getLeft().getElement()  );
-			}
-			else{
-				System.out.println(node.getElement() + "-> left: " + node.getLeft().getElement() + " right: " + node.getRight().getElement()  );
-			}
-		}
-		
-		
-		printTree(node.getRight());
-		 
-		**/
-		} 
+	} 
 	
 	
 	
 	
 	protected void visitNode(BSTNode<E,K> node){
-		//findLeftmost(root)
-		//System.out.println("starting to print");
-		
-		if(node == null);
+		if(node == null) return;
 			//System.out.println("Empty node HERE!");
 		
 		//if the visited node is a leaf (i.e has no right/left children)
