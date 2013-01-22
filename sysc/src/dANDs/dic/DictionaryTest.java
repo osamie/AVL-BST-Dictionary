@@ -27,8 +27,6 @@ public class DictionaryTest {
 
 	public static void main(String[] args) {
 		System.out.println("		------------------------");
-		System.out.println("		OSAZUWA OMIGIE 100764733");
-		System.out.println("		SYSC 2100: ASSIGNMENT 5 ");
 		System.out.println("		AVL AND BST DICTIONARY");
 		System.out.println("		-----------------------");
 		System.out.println();
@@ -69,8 +67,7 @@ public class DictionaryTest {
 		System.out.println("----------------end of AVL node traversal--------------------------------");
 		
 		
-		// print the depth
-		
+		// print the depth	
 		System.out.println("The initial BST tree has a maximum depth of "
 				+ dict1.depth());
 		System.out.println("The initial AVL tree has a maximum depth of "
